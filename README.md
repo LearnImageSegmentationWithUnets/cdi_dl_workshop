@@ -1,1 +1,3 @@
 # cdi_dl_workshop
+
+A work in progress ...
