@@ -16,7 +16,7 @@ except:
 #numerical
 import tensorflow as tf
 import numpy as np
-from scipy.io import savemat, loadmat
+from scipy.io import savemat
 import pydensecrf.densecrf as dcrf
 from pydensecrf.utils import create_pairwise_bilateral, unary_from_labels, unary_from_softmax
 from numpy.lib.stride_tricks import as_strided as ast
@@ -141,7 +141,7 @@ def getCP(tmp, graph):
    # Sort to show labels of first prediction in order of confidence
    top_k = results.argsort()[-len(results):][::-1]
 
-   return top_k[0], results[top_k[0]], results[top_k] #, np.std(tmp[:,:,0])
+   return top_k[0], results[top_k[0]] ##, results[top_k] #, np.std(tmp[:,:,0])
 
 
 # =========================================================
@@ -274,14 +274,14 @@ def get_semseg(img, tile, decim, classifier_file, prob_thres, prob, cmap1, name)
       w1.append(getCP(Z[i], graph))
 
    ##C=most likely, P=prob, PP=all probs
-   C, P, PP = zip(*w1)
+   C, P = zip(*w1)
 
    C = np.asarray(C)
    P = np.asarray(P)
-   PP = np.asarray(PP)
+   #PP = np.asarray(PP)
 
    C = C+1 #add 1 so all labels are >=1
-   PP = np.squeeze(PP)
+   #PP = np.squeeze(PP)
 
    ## create images with classes and probabilities
    Lc = np.zeros((nx, ny))
@@ -294,12 +294,12 @@ def get_semseg(img, tile, decim, classifier_file, prob_thres, prob, cmap1, name)
       Lc[Zx[k][mn:mx,mn:mx], Zy[k][mn:mx,mn:mx]] = Lc[Zx[k][mn:mx,mn:mx], Zy[k][mn:mx,mn:mx]]+C[k] 
       Lp[Zx[k][mn:mx,mn:mx], Zy[k][mn:mx,mn:mx]] = Lp[Zx[k][mn:mx,mn:mx], Zy[k][mn:mx,mn:mx]]+P[k] 
 
-   Lpp = np.zeros((nx, ny, np.shape(PP)[1]))
-   for k in range(len(Zx)): 
-      for l in range(np.shape(PP)[1]):
-         Lpp[Zx[k], Zy[k], l] = Lpp[Zx[k], Zy[k], l]+PP[k][l]
+   #Lpp = np.zeros((nx, ny, np.shape(PP)[1]))
+   #for k in range(len(Zx)): 
+   #   for l in range(np.shape(PP)[1]):
+   #      Lpp[Zx[k], Zy[k], l] = Lpp[Zx[k], Zy[k], l]+PP[k][l]
 
-   Lpp = Lpp[:nxo, :nyo, :]      
+   #Lpp = Lpp[:nxo, :nyo, :]      
    Lp = Lp[:nxo, :nyo]      
    Lc = Lc[:nxo, :nyo]
 
@@ -323,12 +323,9 @@ def get_semseg(img, tile, decim, classifier_file, prob_thres, prob, cmap1, name)
    resrr = np.zeros(np.shape(resr), dtype='int8')
    for kk in range(len(code1)):
       resrr[resr==code2[kk]] = code1[kk]   
-    
-   ###==============================================================
-   savemat(name+'_ares_'+str(tile)+'.mat', {'sparse': Lc.astype('int'), 'Lpp': Lpp, 'class': resrr.astype('int'), 'labels': labels}, do_compression = True)
-     
-    
-   del res, resr
+
+   del res, resr    
+   print("Writing png file")    
 
    fig = plt.figure(figsize=(25,15))
    fig.subplots_adjust(wspace=0.1)
@@ -369,8 +366,15 @@ def get_semseg(img, tile, decim, classifier_file, prob_thres, prob, cmap1, name)
    cb.ax.tick_params(labelsize=6)  
 
    plt.savefig(name+'_ares_'+str(tile)+'.png', dpi=300, bbox_inches='tight')
-    
+   plt.close('all'); del fig   
+
+   ###==============================================================
+   print("Writing mat file")
+
+   savemat(name+'_ares_'+str(tile)+'.mat', {'sparse': Lc.astype('int'), 'class': resrr.astype('int'), 'labels': labels})#, do_compression = True) ##'Lpp': Lpp,
+
    print("Done!")
+
 
 #==============================================================
 if __name__ == '__main__':
