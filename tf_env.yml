@@ -19,3 +19,4 @@ dependencies:
   - tensorflow-hub
   - jupyter
   - tqdm
+  - s3fs
