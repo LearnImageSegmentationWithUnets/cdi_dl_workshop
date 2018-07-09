@@ -2,36 +2,18 @@
 ## Northern Arizona University
 ## daniel.buscombe@nau.edu
 
+##> Part of a series of notebooks for image recognition and classification using deep convolutional neural networks
+
 #general
 from __future__ import division
-##from joblib import Parallel, delayed
 from glob import glob
 import numpy as np 
-#from scipy.misc import imread
 from imageio import imread, imwrite
 from scipy.io import loadmat
 import sys, getopt, os
 
 from tile_utils import *
-
-from scipy.stats import mode as md
-#from scipy.misc import imsave
-
-#if sys.version[0]=='3':
-#   from tkinter import Tk, Toplevel 
-#   from tkinter.filedialog import askopenfilename
-#   import tkinter
-#   import tkinter as tk
-#   from tkinter.messagebox import *   
-#   from tkinter.filedialog import *
-#else:
-#   from Tkinter import Tk, TopLevel
-#   from tkFileDialog import askopenfilename
-#   import Tkinter as tkinter
-#   import Tkinter as tk
-#   from Tkinter.messagebox import *   
-#   from Tkinter.filedialog import *   
-   
+from scipy.stats import mode as md 
 import os.path as path
 
 
@@ -43,32 +25,12 @@ def writeout(tmp, cl, labels, outpath, thres):
    if cnt/len(cl.flatten()) > thres:
       outfile = id_generator()+'.jpg'
       fp = outpath+os.sep+labels[l]+os.sep+outfile
-      imwrite(fp, tmp) ##imsave(fp, tmp)
+      imwrite(fp, tmp)
 
 #==============================================================
 if __name__ == '__main__':
    script, direc, tile, thres, thin = sys.argv    
 
-   #direc = ''; tile = ''; thres = ''
-
-   #argv = sys.argv[1:]
-   #try:
-   #   opts, args = getopt.getopt(argv,"hi:t:a:b:")
-   #except getopt.GetoptError:
-   #   print('python retile.py -i direc -t tilesize -a threshold -b proportion_thin')
-   #   sys.exit(2)
-
-   #for opt, arg in opts:
-   #   if opt == '-h':
-   #      print('Example usage: python retile.py -i direc -t 96 -a 0.9 -b 0.5')
-   #      sys.exit()
-   #   elif opt in ("-t"):
-   #      tile = arg
-   #   elif opt in ("-a"):
-   #      thres = arg
-   #   elif opt in ("-b"):
-   #      thin = arg
-		 
    if not direc:
       direc = 'train'
    if not tile:
@@ -81,13 +43,6 @@ if __name__ == '__main__':
    tile = int(tile)
    thres = float(thres)
    thin = float(thin)
-
-   #===============================================
-   # Run main application
-   #Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing   
-   #files = askopenfilename(filetypes=[("pick mat files","*.mat")], multiple=True)  
-    
-   #direc = imdirec = os.path.dirname(files[0])##'useimages'
    
    #=======================================================
    outpath = direc+os.sep+'tile_'+str(tile)
@@ -126,26 +81,18 @@ if __name__ == '__main__':
 	  
       res = dat['class']
       del dat
-      #core = f.split(os.sep)[-1].split('_mres')[0]  #'/'
-      #print(core)
-      ##get the file that matches the above pattern but doesn't contain 'mres'	  
-      #fim = [e for e in files_grabbed if e.find(core)!=-1 if e.find('mres')==-1 ]
-    
+
       fim = direc+os.sep+f.split(os.sep)[-1].replace('_mres.mat','.JPG')
       print(fim)  
       if fim: 
-         #print(fim)   
-         ##fim = direc+os.sep+fim ##fim[0]
-         #print('Generating tiles from dense class map ....')
          Z,ind = sliding_window(imread(fim), (tile,tile,3), (int(tile/2), int(tile/2),3)) 
 
          C,ind = sliding_window(res, (tile,tile), (int(tile/2), int(tile/2))) 
 
-         ##w = Parallel(n_jobs=-1, verbose=0, pre_dispatch='2 * n_jobs', max_nbytes=None)(delayed(writeout)(Z[k], C[k], labels, outpath, thres) for k in range(len(Z))) 
          for k in range(len(Z)):
             writeout(Z[k], C[k], labels, outpath, thres)
       else:
-         print("correspodning image not found")	     
+         print("corresponding image not found")	     
 		 
    print('thinning files ...')
    if thin>0:
@@ -161,6 +108,4 @@ if __name__ == '__main__':
       files = glob(outpath+os.sep+f+os.sep+'*.jpg')
       print(f+': '+str(len(files)))
   
-
-   
 

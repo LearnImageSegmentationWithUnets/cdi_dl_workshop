@@ -2,6 +2,8 @@
 ## Northern Arizona University
 ## daniel.buscombe@nau.edu
 
+##> Part of a series of notebooks for image recognition and classification using deep convolutional neural networks
+
 from __future__ import division
 import os, time, sys
 from glob import glob
@@ -34,10 +36,6 @@ import matplotlib.colors as colors
 from scipy.misc import imresize
 import matplotlib.pyplot as plt
 
-
-## =========================================================
-#def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-#   return ''.join(random.choice(chars) for _ in range(size))
 
 # =========================================================
 def norm_shape(shap):
@@ -125,8 +123,6 @@ def load_graph(model_file):
 # =========================================================
 def getCP(tmp, graph):
   
-   #graph = load_graph(classifier_file)
-
    input_name = "import/Placeholder" #input" 
    output_name = "import/final_result" 
 
@@ -141,26 +137,19 @@ def getCP(tmp, graph):
    # Sort to show labels of first prediction in order of confidence
    top_k = results.argsort()[-len(results):][::-1]
 
-   return top_k[0], results[top_k[0]] ##, results[top_k] #, np.std(tmp[:,:,0])
+   return top_k[0], results[top_k[0]] 
 
 
 # =========================================================
-def norm_im(img): ##, testimage):
-   input_mean = 0 #128
-   input_std = 255 #128
+def norm_im(img): 
+   input_mean = 0 
+   input_std = 255 
 
    input_name = "file_reader"
    output_name = "normalized"
-   #img = imread(image_path)
    nx, ny, nz = np.shape(img)
 
    theta = np.std(img).astype('int')
-   #try:
-   #   file_reader = tf.read_file(testimage, input_name)
-   #   image_reader = tf.image.decode_jpeg(file_reader, channels = 3,
-   #                                     name='jpeg_reader')
-   #   float_caster = tf.cast(image_reader, tf.float32)  
-   #except:
    float_caster = tf.cast(img, tf.float32)
    
    dims_expander = tf.expand_dims(float_caster, 0);
@@ -222,12 +211,7 @@ def getCRF(image, Lc, theta, n_iter, label_lines, compat_spat=12, compat_col=40,
 
       Q = d.inference(n_iter)
 
-      #preds = np.array(Q, dtype=np.float32).reshape(
-      #  (len(label_lines)+1, nx, ny)).transpose(1, 2, 0)
-      #preds = np.expand_dims(preds, 0)
-      #preds = np.squeeze(preds)
-
-      return np.argmax(Q, axis=0).reshape((H, W)) #, preds#, p, R, d.klDivergence(Q),
+      return np.argmax(Q, axis=0).reshape((H, W)) 
 
 #=======================
 def get_semseg(img, tile, decim, classifier_file, prob_thres, prob, cmap1, name):
@@ -247,7 +231,6 @@ def get_semseg(img, tile, decim, classifier_file, prob_thres, prob, cmap1, name)
    ## pad image so it is divisible by N windows with no remainder 
    result = np.vstack((np.hstack((result,np.fliplr(result))), np.flipud(np.hstack((result,np.fliplr(result))))))
  
-   #result = result[:nxo+np.mod(nxo,tile),:nyo+np.mod(nyo,tile), :]
    result = result[:nxo+(nxo % tile),:nyo+(nyo % tile), :]
 
    nx, ny, nz = np.shape(result)
@@ -273,15 +256,13 @@ def get_semseg(img, tile, decim, classifier_file, prob_thres, prob, cmap1, name)
    for i in range(len(Z)):
       w1.append(getCP(Z[i], graph))
 
-   ##C=most likely, P=prob, PP=all probs
+   ##C=most likely, P=prob
    C, P = zip(*w1)
 
    C = np.asarray(C)
    P = np.asarray(P)
-   #PP = np.asarray(PP)
 
    C = C+1 #add 1 so all labels are >=1
-   #PP = np.squeeze(PP)
 
    ## create images with classes and probabilities
    Lc = np.zeros((nx, ny))
@@ -293,13 +274,7 @@ def get_semseg(img, tile, decim, classifier_file, prob_thres, prob, cmap1, name)
    for k in range(len(Zx)): 
       Lc[Zx[k][mn:mx,mn:mx], Zy[k][mn:mx,mn:mx]] = Lc[Zx[k][mn:mx,mn:mx], Zy[k][mn:mx,mn:mx]]+C[k] 
       Lp[Zx[k][mn:mx,mn:mx], Zy[k][mn:mx,mn:mx]] = Lp[Zx[k][mn:mx,mn:mx], Zy[k][mn:mx,mn:mx]]+P[k] 
-
-   #Lpp = np.zeros((nx, ny, np.shape(PP)[1]))
-   #for k in range(len(Zx)): 
-   #   for l in range(np.shape(PP)[1]):
-   #      Lpp[Zx[k], Zy[k], l] = Lpp[Zx[k], Zy[k], l]+PP[k][l]
-
-   #Lpp = Lpp[:nxo, :nyo, :]      
+     
    Lp = Lp[:nxo, :nyo]      
    Lc = Lc[:nxo, :nyo]
 
@@ -413,12 +388,10 @@ if __name__ == '__main__':
       code[label] = [i for i, x in enumerate([x.startswith(label) for x in labels]) if x].pop()    
 
     
-   with open(colors_path) as f: #'labels.txt') as f:
+   with open(colors_path) as f: 
       cols = f.readlines()
    cmap1 = [x.strip() for x in cols] 
  
-   ##classes = dict(zip(labels, cmap1))
-
    cmap1 = colors.ListedColormap(cmap1)    
     
    name, ext = os.path.splitext(imfile)

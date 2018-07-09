@@ -2,6 +2,8 @@
 ## Northern Arizona University
 ## daniel.buscombe@nau.edu
 
+##> Part of a series of notebooks for image recognition and classification using deep convolutional neural networks
+
 from numpy.lib.stride_tricks import as_strided as ast
 import numpy as np
 import random, string
