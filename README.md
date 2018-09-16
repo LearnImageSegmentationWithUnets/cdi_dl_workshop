@@ -17,7 +17,7 @@ Many of these materials are mirrored in the [dl_tools library](https://github.co
 ## Fork this repository
 
 ![picture1](https://user-images.githubusercontent.com/3596509/45598749-c9b2bd00-b995-11e8-86f6-e54db8ca525f.png)
-<img width="960" alt="picture5" src="https://user-images.githubusercontent.com/3596509/45598750-c9b2bd00-b995-11e8-9598-88e382027a0f.png">
+<img width="960" 
 
 ## Launch ESIPFED jupyter cloud computer
 
@@ -38,8 +38,7 @@ Clone YOUR forked repository from YOUR github page
 ![picture4](https://user-images.githubusercontent.com/3596509/45598751-c9b2bd00-b995-11e8-931c-86bbf2bdd4ff.png)
 
 
-![picture5] (https://user-images.githubusercontent.com/3596509/45598782-257d4600-b996-11e8-9b1b-63c5073d2c21.png)
-
+alt="picture5" src="https://user-images.githubusercontent.com/3596509/45598750-c9b2bd00-b995-11e8-9598-88e382027a0f.png">
 
 ## Launch a notebook
 
