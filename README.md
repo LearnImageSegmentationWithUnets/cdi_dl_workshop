@@ -38,8 +38,6 @@ Clone YOUR forked repository from YOUR github page
 ![picture4](https://user-images.githubusercontent.com/3596509/45598751-c9b2bd00-b995-11e8-931c-86bbf2bdd4ff.png)
 
 
-alt="picture5" src="https://user-images.githubusercontent.com/3596509/45598750-c9b2bd00-b995-11e8-9598-88e382027a0f.png">
-
 ## Launch a notebook
 
 ![picture6](https://user-images.githubusercontent.com/3596509/45598774-0ed6ef00-b996-11e8-8ff6-41c4b4af5eba.png)
