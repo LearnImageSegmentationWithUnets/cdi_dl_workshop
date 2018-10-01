@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.5
+  - python
   - pydensecrf
   - cython
   - numpy
@@ -15,8 +15,9 @@ dependencies:
   - tensorflow
   - opencv
   - ipython
-  - tensorflow
   - tensorflow-hub
   - jupyter
   - tqdm
   - s3fs
+  - gdal
+  - rasterio
