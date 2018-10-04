@@ -1,0 +1,21 @@
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pydensecrf
+  - cython
+  - numpy
+  - scipy
+  - matplotlib
+  - scikit-image
+  - scikit-learn
+  - joblib
+  - tensorflow
+  - opencv
+  - ipython
+  - tensorflow-hub
+  - jupyter
+  - tqdm
+  - s3fs
+  - gdal
+  - rasterio
