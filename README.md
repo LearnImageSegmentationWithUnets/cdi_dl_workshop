@@ -14,18 +14,38 @@ These materials and instructions are currently for workshop participants only, a
 
 Many of these materials are mirrored in the [dl_tools library](https://github.com/dbuscombe-usgs/dl_tools)
 
+# General Instructions
+
+### Clone repo 
+
+```git clone https://github.com/dbuscombe-usgs/cdi_dl_workshop.git```
+
+```cd cdi_dl_workshop```
+
+
+### Create conda environment
+
+```conda env create -f binder\environment.yml```
+
+```conda activate cdi_workshop```
+
+
+### Launch jupyter
+
+```python -m ipykernel install --user --name cdi_workshop --display-name "Python (cdi)"```
+
+```jupyter notebook```
+
+
+
+# Workshop Instructions
+
 ## Fork this repository
 
 ![picture1](https://user-images.githubusercontent.com/3596509/45598749-c9b2bd00-b995-11e8-86f6-e54db8ca525f.png)
 <img width="960" 
 
 ## Launch 
-
-### Local computer
-
-```jupyter notebook```
-
-```python -m ipykernel install --user --name EA --display-name "Python (earthannotator)"```
 
 ### ESIPFED jupyter cloud computer
 
