@@ -1,3 +1,4 @@
+name: cdi_workshop
 channels:
   - conda-forge
 dependencies:
@@ -19,3 +20,8 @@ dependencies:
   - s3fs
   - gdal
   - rasterio
+  - pyviz/label/earthsim::holoviews=1.11.0a6
+  - pyviz/label/earthsim::panel=0.1.0a14
+  - imageio
+  - ipywidgets
+  - pyviz/label/earthsim::bokeh=1.0.0dev5

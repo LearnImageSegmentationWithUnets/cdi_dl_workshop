@@ -19,7 +19,15 @@ Many of these materials are mirrored in the [dl_tools library](https://github.co
 ![picture1](https://user-images.githubusercontent.com/3596509/45598749-c9b2bd00-b995-11e8-86f6-e54db8ca525f.png)
 <img width="960" 
 
-## Launch ESIPFED jupyter cloud computer
+## Launch 
+
+### Local computer
+
+```jupyter notebook```
+
+```python -m ipykernel install --user --name EA --display-name "Python (earthannotator)"```
+
+### ESIPFED jupyter cloud computer
 
 Go to http://pangeo.esipfed.org and log in with your github credentials. Note, this will only work if you are a member of the [cdi-workshops github group](https://github.com/cdi-workshops) (invitation only)
 
